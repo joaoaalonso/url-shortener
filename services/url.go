@@ -62,9 +62,9 @@ func (urlService *URLService) Create(longURL string, alias string) (entities.URL
 		Alias:   alias,
 	}
 
-	urlService.URLRepo.Create(url)
+	err := urlService.URLRepo.Create(url)
 
-	return url, nil
+	return url, err
 }
 
 func (urlService *URLService) aliasExists(alias string) bool {

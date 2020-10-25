@@ -1,28 +1,9 @@
 package repositories
 
-import (
-	"errors"
+import "github.com/joaoaalonso/url-shortener/entities"
 
-	"github.com/joaoaalonso/url-shortener/entities"
-)
-
-// URLRepository is a interface to data persistance
-type URLRepository struct{}
-
-var urls []entities.URL
-
-// GetFromAlias find a url entity from alias
-func (urlRepo *URLRepository) GetFromAlias(alias string) (entities.URL, error) {
-	for _, url := range urls {
-		if url.Alias == alias {
-			return url, nil
-		}
-	}
-
-	return entities.URL{}, errors.New("URL not found")
-}
-
-// Create new url
-func (urlRepo *URLRepository) Create(url entities.URL) {
-	urls = append(urls, url)
+// URLRepository interface
+type URLRepository interface {
+	GetFromAlias(alias string) (entities.URL, error)
+	Create(url entities.URL) error
 }

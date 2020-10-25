@@ -21,5 +21,5 @@ func CreateURLService() services.URLService {
 
 // CreateURLRepository return a new instance of URLRepository
 func CreateURLRepository() repositories.URLRepository {
-	return repositories.URLRepository{}
+	return &repositories.URLRedisRepository{}
 }
