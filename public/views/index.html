@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Go URL Shortner</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/snackbar.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+</head>
+<body>
+  <p>URL Shortner</p>
+  <form id="form">
+    <object type="image/svg+xml" data="/assets/images/url.svg" class="icon"></object>
+    <input type="text" class="url-input" id="url" name="url" placeholder="Paste a long url" required>
+    <input type="submit" class="shorten-button" value="Shorten">
+  </form>
+  <div id="results"></div>
+  <div id="snackbar"></div>
+  <script src="/assets/js/shortner.js"></script>
+</body>
+</html>
