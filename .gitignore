@@ -1,2 +1,4 @@
 url-shortener
+node_modules/
+public/
 .env
