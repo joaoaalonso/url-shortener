@@ -76,3 +76,7 @@ gulp.task('default', gulp.series(
         'views'
     )
 );
+
+gulp.task('watch', function() {
+    gulp.watch('./resources/**/*', gulp.series('default'));
+});

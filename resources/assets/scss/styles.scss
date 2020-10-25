@@ -75,26 +75,25 @@ p {
     transition: all 0.4s ease-out;
     justify-content: space-between;
     border-bottom: 2px solid #f3f3f3;
-    
-    .show {
-        opacity: 1;
-        height: 56px;
-
-        @media screen and (max-width: $mobile-breakpoint) {
-            opacity: 1;
-            height: 83px;
-        }
-    }
 
     &:last-child {
         border: none;
     }
 
+    &.show {
+        opacity: 1 !important;
+        height: 56px !important;
+    
+        @media screen and (max-width: $mobile-breakpoint) {
+            height: 83px !important;
+        }
+    }
+    
+
     @media screen and (max-width: $mobile-breakpoint) {
         flex-direction: column;
     }
 }
-
 .shorten-url {
     overflow: hidden;
     white-space: nowrap;
