@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -13,6 +12,10 @@ import (
 // URLController handle all url requests for url entities
 type URLController struct {
 	URLService services.URLService
+}
+
+type errorResponse struct {
+	Message string `json:"message"`
 }
 
 // Home returns a home view
@@ -26,10 +29,14 @@ func (urlController *URLController) Create(w http.ResponseWriter, r *http.Reques
 	var url entities.URL
 	_ = json.NewDecoder(r.Body).Decode(&url)
 
+	w.Header().Set("Content-type", "application/json")
+
 	url, err := urlController.URLService.Create(url.LongURL, url.Alias)
 
 	if err != nil {
-		fmt.Println("vixi")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(errorResponse{Message: err.Error()})
+		return
 	}
 
 	json.NewEncoder(w).Encode(url)

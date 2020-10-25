@@ -1,5 +1,6 @@
-function getShortenURL(longURL) {
+function getShortenURL(longURL, alias) {
     var body = {
+        alias,
         long_url: longURL
     }
 
@@ -9,15 +10,23 @@ function getShortenURL(longURL) {
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
-        return window.location.href + data.alias;
+        if (data.alias) {
+            return [window.location.origin, data.alias].join('/');
+        }
+
+        if (data.message) {
+            throw new Error(data.message);
+        }
+
+        throw new Error('Error while generation shorten URL');
     });
 }
 
-function showSnackbar(text) {
+function showSnackbar(text, style) {
     var x = document.getElementById('snackbar');
 
     x.innerHTML = text;
-    x.className = 'show';
+    x.className = 'show ' + style;
 
     setTimeout(function(){ x.className = x.className.replace('show', ''); }, 3000);
 }
@@ -62,11 +71,16 @@ function showResult(url) {
 function processForm(e) {
     e.preventDefault();
     var url = document.getElementById('url');
+    var alias = document.getElementById('alias');
 
-    getShortenURL(url.value)
+    getShortenURL(url.value, alias.value)
         .then(function(shortenURL) {
             showResult(shortenURL);
             url.value = '';
+            alias.value = '';
+        })
+        .catch(function(error) {
+            showSnackbar(error.message, 'error');
         });
 }
 
