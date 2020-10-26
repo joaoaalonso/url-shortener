@@ -1,7 +1,7 @@
 #snackbar {
+    top: 30px;
     left: 50%;
     z-index: 1;
-    bottom: 30px;
     padding: 12px;
     font-size: 12px;
     position: fixed;
@@ -15,32 +15,62 @@
 
     &.show {
         visibility: visible;
-        animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;    
+        animation: fadeinDesk 0.5s, fadeoutDesk 0.5s 2.5s;
+        -webkit-animation: fadeinDesk 0.5s, fadeoutDesk 0.5s 2.5s;    
+
+        @media screen and (max-width: 768px) {
+            animation: fadeinMobile 0.5s, fadeoutMobile 0.5s 2.5s;
+            -webkit-animation: fadeinMobile 0.5s, fadeoutMobile 0.5s 2.5s;    
+        }
     }
 
     &.error {
         color: #fff;
         background-color: #ff3333;
     }
+
+    @media screen and (max-width: 768px) {
+        top: unset;
+        bottom: 30px;
+    }
 }
 
-@-webkit-keyframes fadein {
+@-webkit-keyframes fadeinDesk {
+    from {top: 0; opacity: 0;}
+    to {top: 30px; opacity: 1;}
+}
+
+@keyframes fadeinDesk {
+    from {top: 0; opacity: 0;}
+    to {top: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeoutDesk {
+    from {top: 30px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeoutDesk {
+    from {top: 30px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+}
+
+@-webkit-keyframes fadeinMobile {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
 }
 
-@keyframes fadein {
+@keyframes fadeinMobile {
     from {bottom: 0; opacity: 0;}
     to {bottom: 30px; opacity: 1;}
 }
 
-@-webkit-keyframes fadeout {
+@-webkit-keyframes fadeoutMobile {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
 
-@keyframes fadeout {
+@keyframes fadeoutMobile {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }

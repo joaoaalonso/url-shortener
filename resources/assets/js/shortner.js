@@ -1,3 +1,5 @@
+var snackbarTimer
+
 function getShortenURL(longURL, alias) {
     var body = {
         alias,
@@ -28,7 +30,8 @@ function showSnackbar(text, style) {
     x.innerHTML = text;
     x.className = 'show ' + style;
 
-    setTimeout(function(){ x.className = x.className.replace('show', ''); }, 3000);
+    clearTimeout(snackbarTimer)
+    snackbarTimer = setTimeout(function(){ x.className = ''; }, 3000);
 }
 
 function copy(url) {
@@ -62,7 +65,7 @@ function showResult(url) {
     div.appendChild(button);
 
     results.prepend(div);
-
+    
     setTimeout(function() {
         div.className = 'show';
     }, 10);
@@ -73,9 +76,19 @@ function processForm(e) {
     var url = document.getElementById('url');
     var alias = document.getElementById('alias');
 
+    if (!url.value) {
+        return showSnackbar("URL is required", 'error');
+    }
+
+    var regex = new RegExp("^[A-Za-z0-9_-]+$");
+    if(alias.value && !regex.test(alias.value)) {
+        return showSnackbar("Not allowed alias", 'error');
+    }
+
     getShortenURL(url.value, alias.value)
         .then(function(shortenURL) {
             showResult(shortenURL);
+            showSnackbar("URL created!", "success")
             url.value = '';
             alias.value = '';
         })
