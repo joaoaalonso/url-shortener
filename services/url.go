@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"regexp"
 
 	"github.com/joaoaalonso/url-shortener/entities"
 	"github.com/joaoaalonso/url-shortener/repositories"
@@ -55,6 +56,8 @@ func (urlService *URLService) Create(longURL string, alias string) (entities.URL
 		alias = newAlias
 	} else if urlService.aliasExists(alias) {
 		return entities.URL{}, errors.New("Alias alredy in use")
+	} else if !urlService.aliasIsValid(alias) {
+		return entities.URL{}, errors.New("Not allowed alias")
 	}
 
 	url := entities.URL{
@@ -70,4 +73,10 @@ func (urlService *URLService) Create(longURL string, alias string) (entities.URL
 func (urlService *URLService) aliasExists(alias string) bool {
 	_, err := urlService.URLRepo.GetFromAlias(alias)
 	return err == nil
+}
+
+func (urlService *URLService) aliasIsValid(alias string) bool {
+	regex, _ := regexp.Compile("^[A-Za-z0-9_-]+$")
+
+	return regex.Match([]byte(alias))
 }
